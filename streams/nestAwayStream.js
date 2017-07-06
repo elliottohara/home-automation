@@ -15,9 +15,9 @@ class NestAwayEventEmitter extends EventEmitter{
     connect(){
         nest.login(this.email, this.password, (err, data) => {
             if(!err){
-                this.emit('loggedIn', data);
+                self.emit('loggedIn', data);
             }else{
-                this.emit('error', err);
+                self.emit('error', err);
                 return;
             }
             nest.fetchStatus( (data) => {
