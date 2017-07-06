@@ -1,7 +1,7 @@
 "use strict;"
 
 //for now, this file just demonstrates the use of the NestAwayStream
-let config = require('./config');
+let config = require('./configs/config');
 let nestAwayStream = require("./streams/nestAwayStream");
 let nest = new nestAwayStream(config.nest);
 
