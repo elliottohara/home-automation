@@ -1,0 +1,12 @@
+{
+    "info":"copy and rename this file to config.json. Don't commit it, since it has sensitive data",
+    "nest":{
+        "Email": "yourenestemail",
+        "Password": "yournestpassword"
+    },
+    "roomba":{
+        "blid":"your roomba blid",
+        "password": "your roomba password",
+        "ip":"yourroombaip"
+    }
+}
