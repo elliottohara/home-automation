@@ -1,0 +1,2 @@
+* Need to make a bootstrap file that connects all streams based on whats in the config.
+* Need to make client configured rules

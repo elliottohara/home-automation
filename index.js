@@ -2,11 +2,48 @@
 
 //for now, this file just demonstrates the use of the NestAwayStream
 let config = require('./configs/config');
-let nestAwayStream = require("./streams/nestAwayStream");
-let nest = new nestAwayStream(config.nest);
+//NestStuff();
+//WemoStuff();
 
-nest.connect();
-nest.on('loggedIn', () => console.log('Logged In'));
-nest.on('subscribed', () => console.log('Subscribed'));
-nest.on('away', () => console.log(`Away`));
-nest.on('home', () => console.log(`Home`));
+function NestStuff(){
+  let nestAwayStream = require("./streams/nestAwayStream");
+  let nest = new nestAwayStream(config.nest);
+  let nestRules = require('./rules/nestRules');
+  let nestRule = nestRules.NestRule;
+  let trueMatch = nestRules.TrueMatch;
+  let rule1 = new nestRule('away', new trueMatch(), () => console.log('away'));
+  rule1.register(nest);
+  let rule2 = new nestRule('home', new trueMatch(), () => console.log('home'));
+  rule2.register(nest);
+  
+  nest.connect();
+  
+}
+
+function WemoStuff(){
+  let wemoStream = require('./streams/wemoStream');
+  let wemo = new wemoStream();
+  
+
+  let wemoRules = require('./rules/wemoRules');
+  let wemoRule = wemoRules.WemoRule;
+  let nameMatches = wemoRules.NameMatches;
+
+  let rule1Callback = (val, breakfastLight) => {
+      let device = wemo.clients.find((c) => c.device.friendlyName === "Breakfast");
+      if(device){
+        device.setBinaryState(val);
+      }
+  };
+  
+  let rule1 = new wemoRule('binaryState', 
+    new nameMatches("Kitchen Overhead Lights"), rule1Callback);
+  
+  wemo.on('deviceDiscovered', (client) => {
+    rule1.register(client);
+  });
+
+  wemo.connect();
+  
+  
+}

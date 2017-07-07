@@ -1,9 +1,11 @@
 "use strict";
+let interfaces = require("./interfaces");
+let Stream = interfaces.Stream;
+
 let nest = require('unofficial-nest-api')
-let EventEmitter = require('events').EventEmitter;
 let self;
 
-class NestAwayEventEmitter extends EventEmitter{
+class NestAwayEventEmitter extends Stream {
     constructor(config){
         super();
         this.email = config.Email;
