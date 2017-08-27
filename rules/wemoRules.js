@@ -3,21 +3,29 @@ let Matcher = interfaces.Matcher;
 let Rule = interfaces.Rule;
 let self;
 
-class WemoRule extends Rule{
-    constructor(eventName, matcher, callback) {
+class WemoRule extends Rule {
+    constructor(eventName, callback) {
         super();
         this.eventName = eventName;
-        this.matcher = matcher;
         this.callback = callback;
         self = this;
     }
     register(wemoClient) {
-        if(self.matcher.matches(wemoClient.device)){
-            wemoClient.on(self.eventName, (val) => self.callback(val, wemoClient));
-        }
+        this.client = wemoClient;
+        wemoClient.on(self.eventName, (val) => self.callback(val, wemoClient));
     }
 }
 
+class MatchStateWemoRule extends WemoRule {
+    constructor(destinationSwitchName, wemoStream) {
+        super('binaryState', (val, sourceSwitch) => {
+            let device = wemoStream.clients.find((c) => c.device.friendlyName === destinationSwitchName);
+            if(device){
+                device.setBinaryState(val);
+            }
+        });
+    }
+}
 
 /* Matchers */
 class NameMatches extends Matcher {
@@ -32,5 +40,6 @@ class NameMatches extends Matcher {
 
 module.exports = {
     WemoRule,
+    MatchStateWemoRule,
     NameMatches
 };

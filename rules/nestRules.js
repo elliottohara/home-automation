@@ -25,5 +25,7 @@ class TrueMatch extends Matcher {
 
 module.exports = {
     NestRule,
-    TrueMatch
+    TrueMatch,
+    When
+
 }
