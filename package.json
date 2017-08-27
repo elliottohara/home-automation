@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/elliottohara/home-automation#readme",
   "dependencies": {
-    "unofficial-nest-api": "^0.1.4"
+    "unofficial-nest-api": "^0.1.4",
+    "wemo-client": "^0.13.0"
   }
 }
