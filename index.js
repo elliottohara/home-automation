@@ -1,7 +1,8 @@
 "use strict;"
 let config = require('./configs/config');
-//NestStuff();
-WemoStuff();
+// NestStuff();
+// WemoStuff();
+TpLinkStuff();
 
 function NestStuff(){
   let nestAwayStream = require("./streams/nestAwayStream");
@@ -34,4 +35,20 @@ function WemoStuff(){
 
   wemo.connect();
   
+}
+
+function TpLinkStuff() {
+  const Bulb = require('tplink-lightbulb')
+  const client = require('./rules/tpLinkRules');
+  let src, dest;
+  let stream = new client.TpLinkStream();
+  
+  stream.on('deviceDiscovered', (light) => {
+    if(light.bulb.name === 'Living Room Lamp') {
+      new client.MatchStateTpLinkRule('Desk Lamp').register(light);
+    }
+    
+
+  });
+  stream.connect();
 }

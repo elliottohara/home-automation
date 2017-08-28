@@ -1,16 +1,15 @@
-let interfaces = require('./interfaces');
-let Matcher = interfaces.Matcher;
-let Rule = interfaces.Rule;
-let self;
+const interfaces = require('./interfaces');
+const Matcher = interfaces.Matcher;
+const Rule = interfaces.Rule;
 
 class WemoRule extends Rule {
     constructor(eventName, callback) {
         super();
         this.eventName = eventName;
         this.callback = callback;
-        self = this;
     }
     register(wemoClient) {
+        self = this;
         this.client = wemoClient;
         wemoClient.on(self.eventName, (val) => self.callback(val, wemoClient));
     }
